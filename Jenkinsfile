@@ -38,7 +38,7 @@ pipeline {
     }
     stage('Execute_Maven') {
 	  steps {
-		  sh mvn dependency:purge-local-repository
+		  sh 'mvn dependency:purge-local-repository'
 	    script {
 		  rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
         }			                      
