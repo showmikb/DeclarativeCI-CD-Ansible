@@ -27,6 +27,8 @@ pipeline {
   stages {
     stage('Artifactory_Configuration') {
       steps {
+	      sh 'mvn dependency:purge-local-repository'
+	      sh 'mvn update'
         script {
 		  rtMaven.tool = 'Maven'
 		  rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
@@ -38,7 +40,7 @@ pipeline {
     }
     stage('Execute_Maven') {
 	  steps {
-		  sh 'mvn dependency:purge-local-repository'
+		  
 	    script {
 		  rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
         }			                      
